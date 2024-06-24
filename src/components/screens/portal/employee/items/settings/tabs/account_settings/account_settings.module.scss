@@ -1,0 +1,17 @@
+.AccountSettingsTab {
+  .controlBtn {
+    font-size: 15px;
+
+    display: flex;
+    align-items: center;
+
+    &.active {
+      cursor: pointer;
+      color: $color_link_blue;
+    }
+
+    &.success {
+      color: rgb(64, 189, 64);
+    }
+  }
+}
