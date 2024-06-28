@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import styles from "./resumes.module.scss";
 import {
@@ -9,19 +9,27 @@ import {
   Trash,
 } from "react-bootstrap-icons";
 import CustomDropDown from "@/components/ui/dropdown/dropdown";
+import NewResume from "./new_resume/new_resume";
 
-const Resume = ({ isAddNew }) => {
+const Resume = ({ isAddNew, resume, setShowNew }) => {
   return (
     <Col xs={12} md={6} lg={4}>
-      <div className={`${styles.resume} ${isAddNew ? styles.new : ""}`}>
+      <div
+        className={`${styles.resume} ${isAddNew ? styles.new : ""}`}
+        onClick={() => {
+          if (isAddNew) {
+            setShowNew(true);
+          }
+        }}
+      >
         <div className={styles.left}>
           <div className={styles.ico}>
             {isAddNew ? <PlusCircle /> : <FileEarmarkMedical />}
           </div>
 
           <div className={styles.det}>
-            {isAddNew ? <p>Add Cv/Resume</p> : <p>Professional Resume</p>}
-            <span>{isAddNew ? "Browse File" : "3.5 MB"}</span>
+            {isAddNew ? <p>Add Cv/Resume</p> : <p>{resume.name}</p>}
+            <span>{isAddNew ? "Browse File" : `${resume.size} MB`}</span>
           </div>
         </div>
 
@@ -41,7 +49,6 @@ const Resume = ({ isAddNew }) => {
                   variant: "red",
                   icon: <Trash />,
                 },
-                
               ]}
             />
           </div>
@@ -51,14 +58,18 @@ const Resume = ({ isAddNew }) => {
   );
 };
 
-const Resumes = () => {
+const Resumes = ({ resumes }) => {
+  const [showNew, setShowNew] = useState(false);
+
   return (
-    <Row>
-      <Resume />
-      <Resume />
-      <Resume />
-      <Resume isAddNew/>
-    </Row>
+    <>
+      <NewResume show={showNew} setShow={setShowNew} />
+      <Row>
+        {resumes &&
+          resumes.map((resume) => <Resume key={resume.id} resume={resume} />)}
+        <Resume isAddNew setShowNew={setShowNew} />
+      </Row>
+    </>
   );
 };
 

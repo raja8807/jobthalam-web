@@ -2,29 +2,81 @@ import React, { useEffect, useState } from "react";
 import LoginScreen from "./login/login";
 import SignupScreen from "./sign_up/sign_up";
 import UpdateScreen from "./update/update";
-import EmployeeScreen from "./employee/employee";
+import CandidateScreen from "./employee/employee";
+import supabase from "@/utils/supabase/auth";
+import EmployerScreen from "./employer/employer";
 
-const PortalScreen = ({ setUser, user }) => {
+const PortalScreen = ({ currentUser, session, setCurrentUser }) => {
   const [currentScreen, setCurrentScreen] = useState("login");
 
-  useEffect(() => {
-    if (!user) {
+  console.log(currentUser);
+
+  const updateScreen = () => {
+    if (currentUser && session) {
+      if (currentUser.role === "Candidates") {
+        if (
+          currentUser?.role &&
+          currentUser?.first_name &&
+          currentUser?.last_name &&
+          currentUser?.phone_number
+        ) {
+          setCurrentScreen("candidate");
+        } else {
+          setCurrentScreen("update");
+        }
+      } else if (currentUser.role === "Employers") {
+        if (
+          currentUser?.role &&
+          currentUser?.first_name &&
+          currentUser?.last_name &&
+          currentUser?.phone_number
+        ) {
+          setCurrentScreen("employer");
+        } else {
+          setCurrentScreen("update");
+        }
+      }
+    } else if (session && !currentUser) {
+      setCurrentScreen("update");
+    } else if (!session && !currentUser) {
       setCurrentScreen("login");
     }
-  }, [user]);
+  };
+
+  useEffect(() => {
+    updateScreen();
+  }, [session, currentUser]);
 
   return (
     <div>
-      {!user && currentScreen === "login" && (
+      {currentScreen === "login" && (
         <LoginScreen setCurrentScreen={setCurrentScreen} />
       )}
-      {!user && currentScreen === "signup" && (
+      {currentScreen === "signup" && (
         <SignupScreen setCurrentScreen={setCurrentScreen} />
       )}
-      {!user && currentScreen === "update" && (
-        <UpdateScreen setCurrentScreen={setCurrentScreen} setUser={setUser} />
+      {currentScreen === "update" && (
+        <UpdateScreen
+          setCurrentScreen={setCurrentScreen}
+          currentUser={currentUser}
+          sessionUser={session?.user}
+          setCurrentUser={setCurrentUser}
+        />
       )}
-      {user && <EmployeeScreen setCurrentScreen={setCurrentScreen} />}
+      {currentScreen === "candidate" && (
+        <CandidateScreen
+          setCurrentScreen={setCurrentScreen}
+          currentUser={currentUser}
+          setCurrentUser={setCurrentUser}
+        />
+      )}
+      {currentScreen === "employer" && (
+        <EmployerScreen
+          setCurrentScreen={setCurrentScreen}
+          currentUser={currentUser}
+          setCurrentUser={setCurrentUser}
+        />
+      )}
     </div>
   );
 };

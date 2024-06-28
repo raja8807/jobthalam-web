@@ -9,6 +9,7 @@ const CustomButton = ({
   type = "button",
   btnText,
   disabled,
+  isLoading,
 }) => {
   if (type === "submit") {
     return (
@@ -17,8 +18,8 @@ const CustomButton = ({
         className={`${styles.customButton} ${styles[`v${variant}`]} ${
           wFull ? styles.wFull : ""
         }`}
-        value={btnText}
-        disabled={disabled}
+        value={isLoading ? "Loading..." : btnText}
+        disabled={disabled || isLoading}
         onClick={onClick}
       />
     );
@@ -32,7 +33,7 @@ const CustomButton = ({
       onClick={onClick}
       disabled={disabled}
     >
-      {children}
+      {isLoading ? "Loading..." : children}
     </button>
   );
 };

@@ -7,22 +7,33 @@ import CustomSelect from "@/components/ui/select/custom_select/custom_select";
 import ProfileTab from "./tabs/profile/profile";
 import AccountSettingsTab from "./tabs/account_settings/account_setting";
 
-const Settings = () => {
+const Settings = ({ currentUser, setCurrentUser, resumes }) => {
+
+
   const tabs = [
     {
-      title: "Personal",
+      title: "My Profile",
       icon: <Person />,
-      component: <PersonalTab />,
+      component: (
+        <>
+          <PersonalTab
+            currentUser={currentUser}
+            setCurrentUser={setCurrentUser}
+            resumes={resumes}
+          />
+          {/* <ProfileTab currentUser={currentUser} /> */}
+        </>
+      ),
     },
-    {
-      title: "Profile",
-      icon: <PersonCircle />,
-      component: <ProfileTab />,
-    },
+    // {
+    //   title: "Profile",
+    //   icon: <PersonCircle />,
+    //   component: <ProfileTab currentUser={currentUser}/>,
+    // },
     {
       title: "Account Settings",
       icon: <Gear />,
-      component: <AccountSettingsTab />,
+      component: <AccountSettingsTab currentUser={currentUser} />,
     },
   ];
 

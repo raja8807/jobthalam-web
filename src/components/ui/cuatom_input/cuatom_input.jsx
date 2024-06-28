@@ -8,7 +8,7 @@ const CustomInput = ({
   variant = 1,
   type = "text",
   required,
-  changeHandler = () => {},
+  onChange = () => {},
   error,
   label,
   rightElement,
@@ -23,7 +23,9 @@ const CustomInput = ({
         }`}
       >
         <input
-          onChange={changeHandler}
+          onChange={(e) => {
+            onChange(e, e.target.value);
+          }}
           value={value}
           placeholder={placeHolder}
           type={type}

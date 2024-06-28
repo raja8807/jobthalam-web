@@ -9,10 +9,12 @@ import Router from "next/router";
 import styles from "../styles/Home.module.scss";
 import fonts from "@/styles/fonts";
 import Layout from "@/components/layout/layout";
+import supabase from "@/utils/supabase/auth";
+import { getCurrentUserById } from "@/utils/supabase/queries/user";
+
+// var x = new SupabaseAuthClient();
 
 export default function App({ Component, pageProps }) {
-  const [admin, setAdmin] = useState(null);
-
   useEffect(() => {
     Aos.init({
       duration: 1500,
@@ -33,18 +35,47 @@ export default function App({ Component, pageProps }) {
     };
   }, []);
 
-  const [user, setUser] = useState(null);
+  const [session, setSession] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
+
+  const sesssion = async () => {
+    const { data, error } = await supabase.auth.getUser();
+    setSession(data);
+    console.log(data);
+    console.log(error);
+  };
+
+  useEffect(() => {
+    supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === "SIGNED_OUT") {
+        setCurrentUser(null);
+      } else if (event === "SIGNED_IN" || event === "INITIAL_SESSION") {
+
+        const { data, error } = await getCurrentUserById(
+          session?.user?.id,
+          session?.user?.user_metadata?.role
+        );
+
+        if (data) {
+          setCurrentUser(data[0]);
+        }
+      }
+
+      setSession(session);
+
+    });
+  }, []);
 
   return (
     // <SessionProvider session={pageProps.session}>
     <>
       <main className={`${styles.main} ${fonts.MainFont}`}>
-        <Layout user={user} setUser={setUser}>
+        <Layout currentUser={currentUser}>
           <Component
             {...pageProps}
-            admin={admin}
-            setUser={setUser}
-            user={user}
+            currentUser={currentUser}
+            session={session}
+            setCurrentUser={setCurrentUser}
           />
         </Layout>
       </main>

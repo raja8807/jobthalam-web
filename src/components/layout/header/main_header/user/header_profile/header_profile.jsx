@@ -3,9 +3,34 @@ import styles from "./header_profile.module.scss";
 import { BriefcaseFill, Pencil, X } from "react-bootstrap-icons";
 import Link from "next/link";
 import CustomButton from "@/components/ui/custom_button/custom_button";
+import supabase from "@/utils/supabase/auth";
+import { signOut } from "@/utils/supabase/libs";
 
-const HeaderProfile = ({ setUser }) => {
+const HeaderProfile = ({ currentUser }) => {
   const [showPopup, setShowPopup] = useState(false);
+
+  const getRole = () => {
+    const role = currentUser?.role;
+
+    const roles = {
+      Candidates: "Candidate",
+      Employers: "Employer",
+    };
+    return roles[role];
+  };
+
+  const getInitials = () => {
+    let initial = "";
+    if (currentUser?.first_name) {
+      initial = `${currentUser?.first_name?.[0]?.toUpperCase()}`;
+    }
+
+    if (currentUser?.last_name) {
+      initial = `${initial}${currentUser?.last_name?.[0]?.toUpperCase()}`;
+    }
+
+    return initial;
+  };
 
   return (
     <div className={styles.HeaderProfile}>
@@ -15,7 +40,7 @@ const HeaderProfile = ({ setUser }) => {
           setShowPopup((prev) => !prev);
         }}
       >
-        SS
+        {getInitials()}
       </div>
       {showPopup && (
         <div className={styles.popup}>
@@ -25,14 +50,16 @@ const HeaderProfile = ({ setUser }) => {
                 setShowPopup(false);
               }}
             />
-            <div className={styles.dpl}>SS</div>
+            <div className={styles.dpl}>{getInitials()}</div>
           </div>
           <div className={styles.bottom}>
-            <p className={styles.name}>John Doe</p>
-            <small>johndoe@gmail.com</small>
+            <p className={styles.name}>
+              {currentUser?.first_name} {currentUser?.last_name}
+            </p>
+            <small>{currentUser?.email}</small>
             <br />
             <small>
-              <BriefcaseFill /> &nbsp;Employee
+              <BriefcaseFill /> &nbsp;{getRole()}
             </small>
             <br />
             <br />
@@ -41,13 +68,7 @@ const HeaderProfile = ({ setUser }) => {
             </Link>
             <br />
             <br />
-            <CustomButton
-              onClick={() => {
-                setUser(null);
-              }}
-            >
-              Sign Out
-            </CustomButton>
+            <CustomButton onClick={signOut}>Sign Out</CustomButton>
           </div>
         </div>
       )}

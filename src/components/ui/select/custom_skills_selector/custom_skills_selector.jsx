@@ -61,7 +61,7 @@ const CustomSkillSelector = () => {
       {bubbles.length < 5 && (
         <CustomInput
           placeHolder="Skills"
-          changeHandler={(e) => {
+          onChange={(e) => {
             setQuery(e.target.value);
           }}
           onFocus={() => {

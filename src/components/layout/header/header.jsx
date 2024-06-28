@@ -3,11 +3,11 @@ import MainHeader from "./main_header/main_header";
 import SubHeader from "./sub_header/sub_header";
 import TopHeader from "./top_header/top_header";
 
-const Header = ({user,setUser}) => {
+const Header = ({  currentUser }) => {
   return (
     <header className={`${styles.header} `}>
       <TopHeader />
-      <MainHeader user={user} setUser={setUser}/>
+      <MainHeader currentUser={currentUser} />
       {/* <SubHeader /> */}
     </header>
   );

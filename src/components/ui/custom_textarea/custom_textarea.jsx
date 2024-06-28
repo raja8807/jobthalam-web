@@ -8,10 +8,10 @@ const CustomTextArea = ({
   variant = 1,
   type = "text",
   required,
-  changeHandler = () => {},
+  onChange = () => {},
   error,
   label,
-  rows=3,
+  rows = 3,
   ...props
 }) => {
   return (
@@ -21,13 +21,15 @@ const CustomTextArea = ({
         className={`${styles.CustomInput} ${styles[`v${variant}`]} ${
           error ? styles.error : ""
         }`}
-        onChange={changeHandler}
+        onChange={(e) => {
+          onChange(e, e.target.value);
+        }}
         value={value}
         placeholder={placeHolder}
         type={type}
         required={required}
-        {...props}
         rows={rows}
+        {...props}
       />
     </>
   );

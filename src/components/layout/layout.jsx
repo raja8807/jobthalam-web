@@ -2,10 +2,10 @@ import React from "react";
 import Header from "./header/header";
 import Footer from "./footer/footer";
 
-const Layout = ({ children, user, setUser }) => {
+const Layout = ({ children, currentUser }) => {
   return (
     <div>
-      <Header user={user} setUser={setUser} />
+      <Header currentUser={currentUser} />
       {children}
       {/* <Footer/> */}
     </div>

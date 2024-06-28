@@ -7,9 +7,28 @@ import { Briefcase, Gear, Layers } from "react-bootstrap-icons";
 import EmployeeOverview from "./items/overview/overview";
 import FeaturedJobs from "./items/featured_jobs/featured_jobs";
 import Settings from "./items/settings/settings";
+import supabase from "@/utils/supabase/auth";
 
-const EmployeeScreen = () => {
+const EmployeeScreen = ({ currentUser, setCurrentUser }) => {
   const [currentMenuItemIndex, setCurrentMenuItemIndex] = useState(0);
+
+  const [resumes, setResumes] = useState([]);
+
+  const getResumes = async () => {
+    const { data, error } = await supabase
+      .from("Resumes")
+      .select()
+      .eq("user_id", currentUser?.user_id);
+
+    // console.log(data, error);
+    if (data) {
+      setResumes(data);
+    }
+  };
+
+  useEffect(() => {
+    getResumes();
+  }, []);
 
   const menuItems = [
     {
@@ -17,7 +36,10 @@ const EmployeeScreen = () => {
       title: "Overview",
       icon: <Layers />,
       component: (
-        <EmployeeOverview setCurrentMenuItemIndex={setCurrentMenuItemIndex} />
+        <EmployeeOverview
+          setCurrentMenuItemIndex={setCurrentMenuItemIndex}
+          currentUser={currentUser}
+        />
       ),
     },
     {
@@ -30,7 +52,13 @@ const EmployeeScreen = () => {
       id: "setting",
       title: "Settings",
       icon: <Gear />,
-      component: <Settings />,
+      component: (
+        <Settings
+          currentUser={currentUser}
+          setCurrentUser={setCurrentUser}
+          resumes={resumes}
+        />
+      ),
     },
   ];
 

@@ -3,8 +3,6 @@ import styles from "./dropdown.module.scss";
 import { Trash } from "react-bootstrap-icons";
 
 function CustomDropDown({ button, options }) {
-  console.log(options);
-
   return (
     <Dropdown className={styles.CustomDropDown}>
       <Dropdown.Toggle id="dropdown-basic">{button}</Dropdown.Toggle>

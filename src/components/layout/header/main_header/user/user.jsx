@@ -3,14 +3,14 @@ import { Bell } from "react-bootstrap-icons";
 import styles from "./user.module.scss";
 import HeaderProfile from "./header_profile/header_profile";
 
-const User = ({setUser}) => {
+const User = ({ currentUser }) => {
   return (
     <div className={styles.user}>
       <div className={styles.bell}>
         <Bell />
         <div className={styles.bubble} />
       </div>
-      <HeaderProfile setUser={setUser} />
+      <HeaderProfile currentUser={currentUser} />
     </div>
   );
 };
