@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
-import styles from "./employer.module.scss";
+import styles from "./admin_portal.module.scss";
 import CustomContainer from "@/components/ui/custom_container/custom_container";
 import LeftMenu from "@/components/left_menu/left_menu";
-import { Briefcase, Gear, Layers, PlusSquare } from "react-bootstrap-icons";
-import OverviewTab from "./items/overview/overview";
-import MyJobs from "./items/my_jobs/my_jobs";
-import Settings from "./items/settings/settings";
-import PostJobMenu from "./items/post_job/post_job";
+import { Layers } from "react-bootstrap-icons";
+import AdminOverview from "./items/overview/overview";
 
-const EmployerScreen = ({ currentUser, setCurrentUser }) => {
+const AdminPortalScreen = ({ currentUser, setCurrentUser }) => {
   const [currentMenuItemIndex, setCurrentMenuItemIndex] = useState(0);
 
   const [resumes, setResumes] = useState([]);
@@ -19,33 +16,9 @@ const EmployerScreen = ({ currentUser, setCurrentUser }) => {
       title: "Overview",
       icon: <Layers />,
       component: (
-        <OverviewTab
+        <AdminOverview
           setCurrentMenuItemIndex={setCurrentMenuItemIndex}
           currentUser={currentUser}
-        />
-      ),
-    },
-    {
-      id: "post",
-      title: "Post Job",
-      icon: <PlusSquare />,
-      component: <PostJobMenu currentUser={currentUser} />,
-    },
-    {
-      id: "jobs",
-      title: "My Jobs",
-      icon: <Briefcase />,
-      component: <MyJobs currentUser={currentUser}/>,
-    },
-    {
-      id: "setting",
-      title: "Settings",
-      icon: <Gear />,
-      component: (
-        <Settings
-          currentUser={currentUser}
-          setCurrentUser={setCurrentUser}
-          resumes={resumes}
         />
       ),
     },
@@ -70,4 +43,4 @@ const EmployerScreen = ({ currentUser, setCurrentUser }) => {
   );
 };
 
-export default EmployerScreen;
+export default AdminPortalScreen;

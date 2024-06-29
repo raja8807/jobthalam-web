@@ -1,22 +1,15 @@
 import supabase from "../auth";
 import { updateUser } from "../libs";
 
-export const getCurrentUserById = async (id, role) => {
+export const getCurrentUserById = async (id) => {
+  const role = 'Admins'
   if (role) {
-    if (role === "Candidates") {
+    if (role === "Admins") {
       const res = await supabase.from(role).select().eq("user_id", id);
+      // console.log(res);
       return res;
     }
-    if (role === "Employers") {
-      const res = await supabase
-        .from(role)
-        .select(
-          `*,
-         company:Companies(*)`
-        )
-        .eq("user_id", id);
-      return res;
-    }
+  
   }
 
   return [];

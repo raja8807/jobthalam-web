@@ -27,26 +27,6 @@ const LoginForm = ({ setCurrentScreen }) => {
     setIsLoading(false);
   };
 
-  const updateData = async () => {
-    const { data, error } = await supabase.auth.updateUser({
-      data: {
-        role: "can",
-      },
-    });
-
-    console.log(data);
-    console.log(error);
-  };
-
-  const reset = async () => {
-    const { data, error } = await supabase.auth.resetPasswordForEmail(
-      "yora8807+t1@gmail.com"
-    );
-
-    console.log(data);
-    console.log(error);
-  };
-
   return (
     <form
       onSubmit={async (e) => {
@@ -79,7 +59,7 @@ const LoginForm = ({ setCurrentScreen }) => {
           setError(null);
         }}
       />
-      <small className={styles.forgot}>Forgot Password</small>
+      {/* <small className={styles.forgot}>Forgot Password</small> */}
       <CustomButton
         wFull
         type="submit"
@@ -106,16 +86,6 @@ const LoginScreen = ({ setCurrentScreen }) => {
       <div className={styles.LoginScreen}>
         <div className={styles.box}>
           <h3>Sign In</h3>
-          <small className={styles.create}>
-            Don&apos;t have account? &nbsp;{" "}
-            <span
-              onClick={() => {
-                setCurrentScreen("signup");
-              }}
-            >
-              Create Account
-            </span>
-          </small>
           <LoginForm setCurrentScreen={setCurrentScreen} />
         </div>
       </div>

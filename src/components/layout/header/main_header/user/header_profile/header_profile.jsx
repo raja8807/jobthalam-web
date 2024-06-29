@@ -9,16 +9,6 @@ import { signOut } from "@/utils/supabase/libs";
 const HeaderProfile = ({ currentUser }) => {
   const [showPopup, setShowPopup] = useState(false);
 
-  const getRole = () => {
-    const role = currentUser?.role;
-
-    const roles = {
-      Candidates: "Candidate",
-      Employers: "Employer",
-    };
-    return roles[role];
-  };
-
   const getInitials = () => {
     let initial = "";
     if (currentUser?.first_name) {
@@ -59,7 +49,7 @@ const HeaderProfile = ({ currentUser }) => {
             <small>{currentUser?.email}</small>
             <br />
             <small>
-              <BriefcaseFill /> &nbsp;{getRole()}
+              <BriefcaseFill /> &nbsp; Admin
             </small>
             <br />
             <br />

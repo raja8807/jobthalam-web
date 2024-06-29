@@ -38,23 +38,14 @@ export default function App({ Component, pageProps }) {
   const [session, setSession] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
 
-  const sesssion = async () => {
-    const { data, error } = await supabase.auth.getUser();
-    setSession(data);
-    console.log(data);
-    console.log(error);
-  };
-
   useEffect(() => {
     supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === "SIGNED_OUT") {
         setCurrentUser(null);
       } else if (event === "SIGNED_IN" || event === "INITIAL_SESSION") {
+        // console.log(session?.user?.user_metadata?.role);
 
-        const { data, error } = await getCurrentUserById(
-          session?.user?.id,
-          session?.user?.user_metadata?.role
-        );
+        const { data, error } = await getCurrentUserById(session?.user?.id);
 
         if (data) {
           setCurrentUser(data[0]);
@@ -62,9 +53,10 @@ export default function App({ Component, pageProps }) {
       }
 
       setSession(session);
-
     });
   }, []);
+
+  console.log(currentUser);
 
   return (
     // <SessionProvider session={pageProps.session}>
