@@ -11,6 +11,7 @@ import CustomSkillSelector from "@/components/ui/select/custom_skills_selector/c
 import Resumes from "./resume/resumes";
 import CustomButton from "@/components/ui/custom_button/custom_button";
 import supabase from "@/utils/supabase/auth";
+import { EDUCATIONS, EXPERIENCES } from "@/constants/job";
 
 const PersonalTab = ({ currentUser, setCurrentUser, resumes }) => {
   // console.log();
@@ -125,16 +126,7 @@ const PersonalTab = ({ currentUser, setCurrentUser, resumes }) => {
                   <div className={formStyles.control}>
                     <CustomSelect
                       label="Highest Education"
-                      options={[
-                        "No formal education",
-                        "Primary education",
-                        "Secondary education or high school",
-                        "GED",
-                        "Vocational qualification",
-                        "Bachelor's degree",
-                        "Master's degree",
-                        "Doctorate or higher",
-                      ]}
+                      options={EDUCATIONS}
                       onChange={(e, v) => {
                         updateValues("education", v);
                       }}
@@ -145,11 +137,10 @@ const PersonalTab = ({ currentUser, setCurrentUser, resumes }) => {
 
                 <Col xs={12} md={6}>
                   <div className={formStyles.control}>
-                    <CustomInput
+                    <CustomSelect
                       value={values.experience}
                       label={"Experience"}
-                      type="number"
-                      min={0}
+                      options={EXPERIENCES}
                       onChange={(e, v) => {
                         updateValues("experience", v);
                       }}
@@ -188,13 +179,13 @@ const PersonalTab = ({ currentUser, setCurrentUser, resumes }) => {
             />
           </div>
         </div>
+        <br />
+        <h5>Resumes</h5>
+        <Resumes resumes={resumes} />
+        <br />
+        <br />
+        <CustomButton isLoading={isLoading}>Save Changes</CustomButton>
       </form>
-      <br />
-      <h5>Resumes</h5>
-      <Resumes resumes={resumes} />
-      <br />
-      <br />
-      <CustomButton isLoading={isLoading}>Save Changes</CustomButton>
     </>
   );
 };

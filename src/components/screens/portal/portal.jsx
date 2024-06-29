@@ -9,8 +9,6 @@ import EmployerScreen from "./employer/employer";
 const PortalScreen = ({ currentUser, session, setCurrentUser }) => {
   const [currentScreen, setCurrentScreen] = useState("login");
 
-  console.log(currentUser);
-
   const updateScreen = () => {
     if (currentUser && session) {
       if (currentUser.role === "Candidates") {

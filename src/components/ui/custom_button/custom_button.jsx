@@ -31,7 +31,7 @@ const CustomButton = ({
         wFull ? styles.wFull : ""
       }`}
       onClick={onClick}
-      disabled={disabled}
+      disabled={disabled || isLoading}
     >
       {isLoading ? "Loading..." : children}
     </button>

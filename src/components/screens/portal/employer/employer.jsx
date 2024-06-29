@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import styles from "./employer.module.scss";
 import CustomContainer from "@/components/ui/custom_container/custom_container";
 import LeftMenu from "@/components/left_menu/left_menu";
-import { Briefcase, Gear, Layers } from "react-bootstrap-icons";
+import { Briefcase, Gear, Layers, PlusSquare } from "react-bootstrap-icons";
 import OverviewTab from "./items/overview/overview";
-import FeaturedJobs from "./items/featured_jobs/featured_jobs";
+import MyJobs from "./items/my_jobs/my_jobs";
 import Settings from "./items/settings/settings";
+import PostJobMenu from "./items/post_job/post_job";
 
 const EmployerScreen = ({ currentUser, setCurrentUser }) => {
   const [currentMenuItemIndex, setCurrentMenuItemIndex] = useState(0);
@@ -25,10 +26,16 @@ const EmployerScreen = ({ currentUser, setCurrentUser }) => {
       ),
     },
     {
+      id: "post",
+      title: "Post Job",
+      icon: <PlusSquare />,
+      component: <PostJobMenu currentUser={currentUser} />,
+    },
+    {
       id: "jobs",
-      title: "Featured Jobs",
+      title: "My Jobs",
       icon: <Briefcase />,
-      component: <FeaturedJobs />,
+      component: <MyJobs currentUser={currentUser}/>,
     },
     {
       id: "setting",

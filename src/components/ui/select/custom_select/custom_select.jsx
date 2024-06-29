@@ -8,6 +8,7 @@ const CustomSelect = ({
   options = [],
   value,
   onChange = () => {},
+  required,
 }) => {
   return (
     <div className={`${styles.CustomSelect} ${styles[`v${variant}`]}`}>
@@ -17,10 +18,11 @@ const CustomSelect = ({
         onChange={(e) => {
           onChange(e, e.target.value);
         }}
+        required
         value={value}
         defaultValue={value}
       >
-        <option value={null} />
+        {!required && <option value={null} />}
         {options.map((o, i) => {
           return (
             <option key={`op_${i}`} value={o}>

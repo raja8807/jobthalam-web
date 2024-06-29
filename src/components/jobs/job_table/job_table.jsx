@@ -3,12 +3,19 @@ import styles from "./job_table.module.scss";
 import { Col, Row } from "react-bootstrap";
 import JobPreviewRow from "../job_preview_row/job_preview_row";
 
-const JobTable = ({ title, hasDateApplied, jobs = [] }) => {
+const JobTable = ({
+  title,
+  hasDateApplied,
+  jobs = [],
+  dateColName = "Date Applied",
+  actionBtnText,
+  onActionClick,
+}) => {
   return (
     <div className={styles.JobTable}>
       <div className={styles.title}>
         <p>
-          {title} <span>(10)</span>
+          {title} <span>({jobs.length})</span>
         </p>
       </div>
 
@@ -19,7 +26,7 @@ const JobTable = ({ title, hasDateApplied, jobs = [] }) => {
           </Col>
           {hasDateApplied && (
             <Col md={3}>
-              <p>Date Applied</p>
+              <p>{dateColName}</p>
             </Col>
           )}
           <Col md={1}>
@@ -49,6 +56,9 @@ const JobTable = ({ title, hasDateApplied, jobs = [] }) => {
             key={job.id}
             hasDateApplied={hasDateApplied}
             job={job}
+            dateColName={dateColName}
+            actionBtnText={actionBtnText}
+            onActionClick={onActionClick}
           />
         );
       })}

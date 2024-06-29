@@ -5,7 +5,13 @@ import CustomButton from "@/components/ui/custom_button/custom_button";
 import { Check2, CurrencyRupee, GeoAlt } from "react-bootstrap-icons";
 import JobDetails from "../job_details/job_details";
 
-const JobPreviewRow = ({ hasDateApplied, job }) => {
+const JobPreviewRow = ({
+  hasDateApplied,
+  job,
+  dateColName = "Date Applied",
+  actionBtnText ,
+  onActionClick
+}) => {
   const [showDetailsFor, setShowDetailsFor] = useState(null);
 
   return (
@@ -16,29 +22,45 @@ const JobPreviewRow = ({ hasDateApplied, job }) => {
       }}
     >
       {showDetailsFor && (
-        <JobDetails job={showDetailsFor} setJob={setShowDetailsFor} />
+        <JobDetails
+          job={showDetailsFor}
+          setJob={setShowDetailsFor}
+          actionBtnText={actionBtnText}
+          onActionClick={onActionClick}
+        />
       )}
       <Row>
         <Col xs={12} md={hasDateApplied ? 5 : 8}>
           <div className={styles.col}>
             <div className={styles.job_details}>
               <div>
-                <Image src={job.logoUrl} alt="company_logo" width={50} />
+                <Image
+                  src={
+                    job?.company?.logo_url || "/company_logo_placeholder.png"
+                  }
+                  alt="company_logo"
+                  width={50}
+                />
               </div>
 
               <div className={styles.right}>
                 <div className={styles.top}>
                   <p className={styles.job_name}>{job.title}</p>
-                  <p className={styles.job_type}>Remote</p>
+                  <p className={styles.job_type}>{job.type}</p>
                 </div>
 
                 <div className={styles.bottom}>
                   <p className={styles.job_location}>
-                    <GeoAlt /> Chennai
+                    <GeoAlt /> {job.location}
                   </p>
-                  <p className={styles.job_salary}>
-                    <CurrencyRupee /> 25,000
-                  </p>
+                  {job.min_salary > 0 && (
+                    <p className={styles.job_salary}>
+                      <CurrencyRupee /> {job.min_salary}{" "}
+                      {job.max_salary &&
+                        job.max_salary !== job.min_salary &&
+                        `- ${job.max_salary}`}
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
@@ -48,7 +70,8 @@ const JobPreviewRow = ({ hasDateApplied, job }) => {
           <Col xs={12} md={3}>
             <div className={styles.col}>
               <div className={styles.date}>
-                <span>Date Applied:&nbsp;</span>Dec 7, 2024
+                <span>{dateColName}:&nbsp;</span>
+                {new Date(job.created_at).toLocaleDateString()}
               </div>
             </div>
           </Col>
