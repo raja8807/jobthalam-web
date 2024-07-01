@@ -12,9 +12,9 @@ import {
   JOB_TYPES,
   LOCATIONS,
 } from "../../../../../../constants/job";
-import supabase from "@/utils/supabase/auth";
 
-const PostJobMenu = ({ currentUser }) => {
+
+const PostJobMenu = ({ currentUser,supabase }) => {
   const [values, setValues] = useState({
     title: "",
     role: "",

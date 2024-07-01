@@ -7,9 +7,8 @@ import styles from "./personal.module.scss";
 import CustomSelect from "@/components/ui/select/custom_select/custom_select";
 import CustomTextArea from "@/components/ui/custom_textarea/custom_textarea";
 import CustomButton from "@/components/ui/custom_button/custom_button";
-import supabase from "@/utils/supabase/auth";
 
-const PersonalTab = ({ currentUser, setCurrentUser, resumes }) => {
+const PersonalTab = ({ currentUser, setCurrentUser, supabase }) => {
   const [values, setValues] = useState({ ...currentUser });
 
   const [compValues, setCompValues] = useState({

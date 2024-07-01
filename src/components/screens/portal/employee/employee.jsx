@@ -9,7 +9,7 @@ import FeaturedJobs from "./items/featured_jobs/featured_jobs";
 import Settings from "./items/settings/settings";
 import { createClient } from "@/utils/supabase/auth";
 
-const EmployeeScreen = ({ currentUser, setCurrentUser,supabase }) => {
+const EmployeeScreen = ({ currentUser, setCurrentUser, supabase }) => {
   const [currentMenuItemIndex, setCurrentMenuItemIndex] = useState(0);
 
   const [resumes, setResumes] = useState([]);
@@ -46,7 +46,7 @@ const EmployeeScreen = ({ currentUser, setCurrentUser,supabase }) => {
       id: "jobs",
       title: "Featured Jobs",
       icon: <Briefcase />,
-      component: <FeaturedJobs />,
+      component: <FeaturedJobs supabase={supabase} currentUser={currentUser} />,
     },
     {
       id: "setting",
@@ -58,7 +58,6 @@ const EmployeeScreen = ({ currentUser, setCurrentUser,supabase }) => {
           setCurrentUser={setCurrentUser}
           resumes={resumes}
           supabase={supabase}
-
         />
       ),
     },

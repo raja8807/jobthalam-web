@@ -6,7 +6,10 @@ import {
   Briefcase,
   CalendarDate,
   ClockHistory,
+  EnvelopeAt,
   GeoAlt,
+  Person,
+  Phone,
   X,
 } from "react-bootstrap-icons";
 
@@ -128,6 +131,24 @@ const JobDetails = ({
                 </div>
               </div>
             </div>
+
+            {job.employer && (
+              <div className={styles.box}>
+                <h6>Contact</h6>
+                <div className={styles.box3}>
+                  <strong>
+                    <Person/> &nbsp;{job?.employer.first_name} {job?.employer.last_name}
+                  </strong>
+                  <div>
+                    <EnvelopeAt /> &nbsp;<small>{job?.employer.email}</small>
+                  </div>
+                  <div>
+                    <Phone /> &nbsp;
+                    <small>{job.employer.phone_number}</small>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           <div className={styles.bottom}>

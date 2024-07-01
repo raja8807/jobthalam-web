@@ -8,7 +8,7 @@ import MyJobs from "./items/my_jobs/my_jobs";
 import Settings from "./items/settings/settings";
 import PostJobMenu from "./items/post_job/post_job";
 
-const EmployerScreen = ({ currentUser, setCurrentUser }) => {
+const EmployerScreen = ({ currentUser, setCurrentUser, supabase }) => {
   const [currentMenuItemIndex, setCurrentMenuItemIndex] = useState(0);
 
   const [resumes, setResumes] = useState([]);
@@ -22,6 +22,7 @@ const EmployerScreen = ({ currentUser, setCurrentUser }) => {
         <OverviewTab
           setCurrentMenuItemIndex={setCurrentMenuItemIndex}
           currentUser={currentUser}
+          supabase={supabase}
         />
       ),
     },
@@ -29,13 +30,13 @@ const EmployerScreen = ({ currentUser, setCurrentUser }) => {
       id: "post",
       title: "Post Job",
       icon: <PlusSquare />,
-      component: <PostJobMenu currentUser={currentUser} />,
+      component: <PostJobMenu currentUser={currentUser} supabase={supabase} />,
     },
     {
       id: "jobs",
       title: "My Jobs",
       icon: <Briefcase />,
-      component: <MyJobs currentUser={currentUser}/>,
+      component: <MyJobs currentUser={currentUser} supabase={supabase} />,
     },
     {
       id: "setting",
@@ -46,6 +47,7 @@ const EmployerScreen = ({ currentUser, setCurrentUser }) => {
           currentUser={currentUser}
           setCurrentUser={setCurrentUser}
           resumes={resumes}
+          supabase={supabase}
         />
       ),
     },

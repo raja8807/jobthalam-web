@@ -1,10 +1,9 @@
 import JobTable from "@/components/jobs/job_table/job_table";
-import CustomButton from "@/components/ui/custom_button/custom_button";
 import MainFrame from "@/components/ui/main_frame/main_frame";
 import supabase from "@/utils/supabase/auth";
 import React, { useEffect, useState } from "react";
 
-const MyJobs = ({ currentUser }) => {
+const MyJobs = ({ currentUser,supabase }) => {
   const [featuredJobs, setFeaturedJobs] = useState([]);
 
   const fetMyJobs = async () => {

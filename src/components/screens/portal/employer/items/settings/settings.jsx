@@ -5,7 +5,7 @@ import { Gear, Person } from "react-bootstrap-icons";
 import EmployerProfileTab from "./tabs/personal/personal";
 import AccountSettingsTab from "./tabs/account_settings/account_setting";
 
-const Settings = ({ currentUser, setCurrentUser, resumes }) => {
+const Settings = ({ currentUser, setCurrentUser, supabase }) => {
   const tabs = [
     {
       title: "Employer Profile",
@@ -14,7 +14,7 @@ const Settings = ({ currentUser, setCurrentUser, resumes }) => {
         <EmployerProfileTab
           currentUser={currentUser}
           setCurrentUser={setCurrentUser}
-          resumes={resumes}
+          supabase={supabase}
         />
       ),
     },
@@ -22,7 +22,9 @@ const Settings = ({ currentUser, setCurrentUser, resumes }) => {
     {
       title: "Contact Settings",
       icon: <Gear />,
-      component: <AccountSettingsTab currentUser={currentUser} />,
+      component: (
+        <AccountSettingsTab currentUser={currentUser} supabase={supabase} />
+      ),
     },
   ];
 

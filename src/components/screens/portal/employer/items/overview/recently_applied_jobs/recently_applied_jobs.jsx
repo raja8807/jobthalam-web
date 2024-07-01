@@ -25,7 +25,7 @@ const RecentlyAppliedJobs = () => {
 
   return (
     <div>
-      <JobTable title="Recently Applied" hasDateApplied jobs={recentJobs} />
+      <JobTable title="Recent Applications" hasDateApplied jobs={recentJobs} />
     </div>
   );
 };

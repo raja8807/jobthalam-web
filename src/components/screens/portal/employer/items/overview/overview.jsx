@@ -8,10 +8,10 @@ const OverviewTab = ({ setCurrentMenuItemIndex, currentUser }) => {
   return (
     <MainFrame
     head={`Hello, ${currentUser?.first_name} ${currentUser?.last_name}`}
-      caption="Here is your daily activities and job alerts"
+      caption="Here is your latest applications"
     >
       <div className={styles.EmployeeOverview}>
-        {!(
+        {/* {!(
           !!currentUser?.dob &&
           !!currentUser?.gender &&
           !!currentUser?.education &&
@@ -21,7 +21,7 @@ const OverviewTab = ({ setCurrentMenuItemIndex, currentUser }) => {
           <UpdateProfileAlert
             setCurrentMenuItemIndex={setCurrentMenuItemIndex}
           />
-        )}
+        )} */}
         <RecentlyAppliedJobs />
       </div>
     </MainFrame>
