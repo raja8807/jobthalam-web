@@ -24,7 +24,10 @@ const LoginForm = ({ setSession, supabase }) => {
         ...values,
       });
 
-    setSession(sessionData);
+    if (sessionData?.user) {
+      setSession(sessionData);
+    }
+
     console.log(sessionData);
     console.log(sessionError);
     setError(sessionError?.message);
