@@ -1,0 +1,22 @@
+.CandidatesList {
+  // background-color: red;
+  display: flex;
+  gap: 20px;
+  max-width: calc(100vw - 100px);
+  overflow-x: auto;
+  border-bottom: 1px solid $color_g1;
+  padding-bottom: 16px;
+//   background-color: $color_g1;
+
+  @include respond-above(lg) {
+    flex-direction: column;
+    gap: 0;
+    height: calc(100dvh - 235px);
+    border-right: 1px solid $color_g1;
+    padding-right: 10px;
+  }
+}
+
+.search{
+    padding-right: 16px;
+}

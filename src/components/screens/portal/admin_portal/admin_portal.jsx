@@ -2,8 +2,9 @@ import React, { useEffect, useState } from "react";
 import styles from "./admin_portal.module.scss";
 import CustomContainer from "@/components/ui/custom_container/custom_container";
 import LeftMenu from "@/components/left_menu/left_menu";
-import { Layers } from "react-bootstrap-icons";
+import { Layers, PersonAdd } from "react-bootstrap-icons";
 import AdminOverview from "./items/overview/overview";
+import CandidatesAndJobsMenu from "./items/candidates_and_jobs/candidates_and_jobs";
 
 const AdminPortalScreen = ({ currentUser, setCurrentUser }) => {
   const [currentMenuItemIndex, setCurrentMenuItemIndex] = useState(0);
@@ -21,6 +22,12 @@ const AdminPortalScreen = ({ currentUser, setCurrentUser }) => {
           currentUser={currentUser}
         />
       ),
+    },
+    {
+      id: "jobs",
+      title: "Candidates and Jobs",
+      icon: <PersonAdd />,
+      component: <CandidatesAndJobsMenu currentUser={currentUser} />,
     },
   ];
 

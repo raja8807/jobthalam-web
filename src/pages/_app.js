@@ -12,7 +12,6 @@ import Layout from "@/components/layout/layout";
 import supabase from "@/utils/supabase/auth";
 import { getCurrentUserById } from "@/utils/supabase/queries/user";
 
-// var x = new SupabaseAuthClient();
 
 export default function App({ Component, pageProps }) {
   useEffect(() => {

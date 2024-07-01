@@ -48,8 +48,8 @@ const JobDetails = ({
             <div className={styles.right}>
               {
                 <CustomButton
-                  onClick={() => {
-                    onActionClick(job);
+                  onClick={async () => {
+                    await onActionClick(job);
                   }}
                 >
                   {actionBtnText}
