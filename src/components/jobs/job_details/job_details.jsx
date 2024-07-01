@@ -136,7 +136,7 @@ const JobDetails = ({
               <p>{job?.description}</p>
               <br />
               <h6>About Company</h6>
-              <p>{job?.company.about}</p>
+              <p>{job?.company?.about}</p>
             </div>
           </div>
         </div>

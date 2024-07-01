@@ -1,13 +1,17 @@
-import supabase from "../auth";
+// import supabase from "../auth";
+import { createClient } from "../auth";
 import { updateUser } from "../libs";
 
-export const getCurrentUserById = async (id, role) => {
+export const getCurrentUserById = async (id, role,supabase) => {
+  // const supabase = createClient()
+  // console.log();
   if (role) {
     if (role === "Candidates") {
       const res = await supabase.from(role).select().eq("user_id", id);
       return res;
     }
     if (role === "Employers") {
+       
       const res = await supabase
         .from(role)
         .select(
@@ -31,6 +35,7 @@ export const updateCurrentUser = async (id, userData, role) => {
   error = res?.error;
 
   if (res.data) {
+    const supabase = createClient()
     const updateRes = await supabase
       .from(role)
       .update({ userData })
@@ -43,6 +48,7 @@ export const updateCurrentUser = async (id, userData, role) => {
 };
 
 export const createNewUser = async (userData, role) => {
+  const supabase = createClient()
   const res = await supabase.from(role).insert({ ...userData });
   const x = supabase.auth.updateUser({
     data: {

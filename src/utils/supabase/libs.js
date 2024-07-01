@@ -1,8 +1,9 @@
-'use client'
+// import supabase from "./auth";
 
-import supabase from "./auth";
+import { createClient } from "./auth";
 
 export const signIn = async ({ email, password }) => {
+  const supabase = createClient()
   const res = await supabase.auth.signInWithPassword({
     email,
     password,
@@ -12,6 +13,7 @@ export const signIn = async ({ email, password }) => {
 };
 
 export const updateUser = async (data) => {
+  const supabase = createClient()
   const res = await supabase.auth.updateUser({
     data,
   });
@@ -20,6 +22,7 @@ export const updateUser = async (data) => {
 };
 
 export const signUpNewUser = async ({ email, password }) => {
+  const supabase = createClient()
   const res = await supabase.auth.signUp({
     email,
     password,
@@ -29,6 +32,7 @@ export const signUpNewUser = async ({ email, password }) => {
 };
 
 export const signOut = async () => {
+  const supabase = createClient()
   const res = await supabase.auth.signOut();
   return res;
 };

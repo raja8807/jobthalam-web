@@ -7,9 +7,9 @@ import { Briefcase, Gear, Layers } from "react-bootstrap-icons";
 import EmployeeOverview from "./items/overview/overview";
 import FeaturedJobs from "./items/featured_jobs/featured_jobs";
 import Settings from "./items/settings/settings";
-import supabase from "@/utils/supabase/auth";
+import { createClient } from "@/utils/supabase/auth";
 
-const EmployeeScreen = ({ currentUser, setCurrentUser }) => {
+const EmployeeScreen = ({ currentUser, setCurrentUser,supabase }) => {
   const [currentMenuItemIndex, setCurrentMenuItemIndex] = useState(0);
 
   const [resumes, setResumes] = useState([]);
@@ -57,6 +57,8 @@ const EmployeeScreen = ({ currentUser, setCurrentUser }) => {
           currentUser={currentUser}
           setCurrentUser={setCurrentUser}
           resumes={resumes}
+          supabase={supabase}
+
         />
       ),
     },

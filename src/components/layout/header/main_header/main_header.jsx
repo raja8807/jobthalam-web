@@ -4,7 +4,7 @@ import styles from "./main_header.module.scss";
 import CustomButton from "@/components/ui/custom_button/custom_button";
 import User from "./user/user";
 
-const MainHeader = ({ currentUser }) => {
+const MainHeader = ({ currentUser,supabase }) => {
   // user = null;
 
   return (
@@ -18,7 +18,7 @@ const MainHeader = ({ currentUser }) => {
           </div>
           <div className={styles.right}>
             {currentUser ? (
-              <User currentUser={currentUser} />
+              <User currentUser={currentUser} supabase={supabase} />
             ) : (
               <>
                 <CustomButton variant={2}>Sign In</CustomButton>

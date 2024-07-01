@@ -3,10 +3,10 @@ import styles from "./header_profile.module.scss";
 import { BriefcaseFill, Pencil, X } from "react-bootstrap-icons";
 import Link from "next/link";
 import CustomButton from "@/components/ui/custom_button/custom_button";
-import supabase from "@/utils/supabase/auth";
-import { signOut } from "@/utils/supabase/libs";
+import supabase, { createClient } from "@/utils/supabase/auth";
+// import { signOut } from "@/utils/supabase/libs";
 
-const HeaderProfile = ({ currentUser }) => {
+const HeaderProfile = ({ currentUser, supabase }) => {
   const [showPopup, setShowPopup] = useState(false);
 
   const getRole = () => {
@@ -68,7 +68,16 @@ const HeaderProfile = ({ currentUser }) => {
             </Link>
             <br />
             <br />
-            <CustomButton onClick={signOut}>Sign Out</CustomButton>
+            <CustomButton
+              onClick={async () => {
+                console.log("1");
+
+                const { data, error } = await supabase.auth.signOut();
+                console.log(data, error);
+              }}
+            >
+              Sign Out
+            </CustomButton>
           </div>
         </div>
       )}

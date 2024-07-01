@@ -9,7 +9,7 @@ import Router from "next/router";
 import styles from "../styles/Home.module.scss";
 import fonts from "@/styles/fonts";
 import Layout from "@/components/layout/layout";
-import supabase from "@/utils/supabase/auth";
+import { createClient } from "@/utils/supabase/auth";
 import { getCurrentUserById } from "@/utils/supabase/queries/user";
 
 // var x = new SupabaseAuthClient();
@@ -37,45 +37,47 @@ export default function App({ Component, pageProps }) {
 
   const [session, setSession] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
-
-  const sesssion = async () => {
-    const { data, error } = await supabase.auth.getUser();
-    setSession(data);
-    console.log(data);
-    console.log(error);
-  };
+  const supabase = createClient();
+  
 
   useEffect(() => {
     supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === "SIGNED_OUT") {
+        setSession(null);
         setCurrentUser(null);
-      } else if (event === "SIGNED_IN" || event === "INITIAL_SESSION") {
+      } else {
+        const role = session?.user?.user_metadata?.role;
+        if (role) {
+          const { data: userData, error: userError } = await supabase
+            .from(role)
+            .select(role === "Employers" ? `*,company:Companies(*)` : `*`)
+            .eq("user_id", session?.user.id);
 
-        const { data, error } = await getCurrentUserById(
-          session?.user?.id,
-          session?.user?.user_metadata?.role
-        );
+          setCurrentUser(userData?.[0]);
 
-        if (data) {
-          setCurrentUser(data[0]);
+          if (userError) {
+            console.log("User Error--->", userError);
+          }
         }
+        setSession(session);
       }
-
-      setSession(session);
-
     });
   }, []);
+
+
 
   return (
     // <SessionProvider session={pageProps.session}>
     <>
       <main className={`${styles.main} ${fonts.MainFont}`}>
-        <Layout currentUser={currentUser}>
+        <Layout currentUser={currentUser} supabase={supabase}>
           <Component
             {...pageProps}
             currentUser={currentUser}
             session={session}
             setCurrentUser={setCurrentUser}
+            setSession={setSession}
+            supabase={supabase}
           />
         </Layout>
       </main>

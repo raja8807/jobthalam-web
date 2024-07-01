@@ -7,7 +7,7 @@ import MainFrame from "@/components/ui/main_frame/main_frame";
 const EmployeeOverview = ({ setCurrentMenuItemIndex, currentUser }) => {
   return (
     <MainFrame
-      head="Hello, John Doe"
+      head={`Hello, ${currentUser?.first_name} ${currentUser?.last_name}`}
       caption="Here is your daily activities and job alerts"
     >
       <div className={styles.EmployeeOverview}>

@@ -10,14 +10,11 @@ import ControlLabel from "@/components/ui/contol_label/control_label";
 import CustomSkillSelector from "@/components/ui/select/custom_skills_selector/custom_skills_selector";
 import Resumes from "./resume/resumes";
 import CustomButton from "@/components/ui/custom_button/custom_button";
-import supabase from "@/utils/supabase/auth";
+// import supabase from "@/utils/supabase/auth";
 import { EDUCATIONS, EXPERIENCES } from "@/constants/job";
+import { createClient } from "@/utils/supabase/auth";
 
-const PersonalTab = ({ currentUser, setCurrentUser, resumes }) => {
-  // console.log();
-
-  console.log(currentUser);
-
+const PersonalTab = ({ currentUser, setCurrentUser, resumes, supabase }) => {
   const [values, setValues] = useState({ ...currentUser });
   const updateValues = (field, value) => {
     setValues((prev) => ({ ...prev, [field]: value }));
@@ -26,7 +23,6 @@ const PersonalTab = ({ currentUser, setCurrentUser, resumes }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const updateCurrentUser = async () => {
-    console.log("ok");
     setIsLoading(true);
     const { data, error } = await supabase
       .from(currentUser.role)

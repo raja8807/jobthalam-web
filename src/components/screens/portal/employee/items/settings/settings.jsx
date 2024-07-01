@@ -7,7 +7,7 @@ import CustomSelect from "@/components/ui/select/custom_select/custom_select";
 import ProfileTab from "./tabs/profile/profile";
 import AccountSettingsTab from "./tabs/account_settings/account_setting";
 
-const Settings = ({ currentUser, setCurrentUser, resumes }) => {
+const Settings = ({ currentUser, setCurrentUser, resumes ,supabase}) => {
 
 
   const tabs = [
@@ -20,6 +20,7 @@ const Settings = ({ currentUser, setCurrentUser, resumes }) => {
             currentUser={currentUser}
             setCurrentUser={setCurrentUser}
             resumes={resumes}
+            supabase={supabase}
           />
           {/* <ProfileTab currentUser={currentUser} /> */}
         </>

@@ -3,10 +3,17 @@ import LoginScreen from "./login/login";
 import SignupScreen from "./sign_up/sign_up";
 import UpdateScreen from "./update/update";
 import CandidateScreen from "./employee/employee";
-import supabase from "@/utils/supabase/auth";
+import supabase, { createClient } from "@/utils/supabase/auth";
 import EmployerScreen from "./employer/employer";
+import CustomButton from "@/components/ui/custom_button/custom_button";
 
-const PortalScreen = ({ currentUser, session, setCurrentUser }) => {
+const PortalScreen = ({
+  currentUser,
+  session,
+  setCurrentUser,
+  setSession,
+  supabase,
+}) => {
   const [currentScreen, setCurrentScreen] = useState("login");
 
   const updateScreen = () => {
@@ -48,10 +55,15 @@ const PortalScreen = ({ currentUser, session, setCurrentUser }) => {
   return (
     <div>
       {currentScreen === "login" && (
-        <LoginScreen setCurrentScreen={setCurrentScreen} />
+        <LoginScreen
+          setCurrentScreen={setCurrentScreen}
+          setSession={setSession}
+          setCurrentUser={setCurrentUser}
+          supabase={supabase}
+        />
       )}
       {currentScreen === "signup" && (
-        <SignupScreen setCurrentScreen={setCurrentScreen} />
+        <SignupScreen setCurrentScreen={setCurrentScreen} supabase={supabase} />
       )}
       {currentScreen === "update" && (
         <UpdateScreen
@@ -59,6 +71,7 @@ const PortalScreen = ({ currentUser, session, setCurrentUser }) => {
           currentUser={currentUser}
           sessionUser={session?.user}
           setCurrentUser={setCurrentUser}
+          supabase={supabase}
         />
       )}
       {currentScreen === "candidate" && (
@@ -66,6 +79,7 @@ const PortalScreen = ({ currentUser, session, setCurrentUser }) => {
           setCurrentScreen={setCurrentScreen}
           currentUser={currentUser}
           setCurrentUser={setCurrentUser}
+          supabase={supabase}
         />
       )}
       {currentScreen === "employer" && (
@@ -73,6 +87,7 @@ const PortalScreen = ({ currentUser, session, setCurrentUser }) => {
           setCurrentScreen={setCurrentScreen}
           currentUser={currentUser}
           setCurrentUser={setCurrentUser}
+          supabase={supabase}
         />
       )}
     </div>

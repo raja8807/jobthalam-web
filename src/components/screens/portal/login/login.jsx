@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import styles from "./login.module.scss";
 import CustomInput from "@/components/ui/cuatom_input/cuatom_input";
 import CustomButton from "@/components/ui/custom_button/custom_button";
-import supabase from "@/utils/supabase/auth";
-import { signIn } from "@/utils/supabase/libs";
+import { createClient } from "@/utils/supabase/auth";
+// import { createClient } from "@supabase/supabase-js";
 
-const LoginForm = ({ setCurrentScreen }) => {
+const LoginForm = ({ setSession, supabase }) => {
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -19,32 +19,14 @@ const LoginForm = ({ setCurrentScreen }) => {
     setError(null);
     setIsLoading(true);
 
-    const { data, error } = await signIn(values);
+    const { data: sessionData, error: sessionError } =
+      await supabase.auth.signInWithPassword({
+        ...values,
+      });
 
-    if (error) {
-      setError(error.message);
-    }
+    setSession(sessionData);
+    setError(sessionError?.message);
     setIsLoading(false);
-  };
-
-  const updateData = async () => {
-    const { data, error } = await supabase.auth.updateUser({
-      data: {
-        role: "can",
-      },
-    });
-
-    console.log(data);
-    console.log(error);
-  };
-
-  const reset = async () => {
-    const { data, error } = await supabase.auth.resetPasswordForEmail(
-      "yora8807+t1@gmail.com"
-    );
-
-    console.log(data);
-    console.log(error);
   };
 
   return (
@@ -100,7 +82,12 @@ const LoginForm = ({ setCurrentScreen }) => {
   );
 };
 
-const LoginScreen = ({ setCurrentScreen }) => {
+const LoginScreen = ({
+  setCurrentScreen,
+  setCurrentUser,
+  setSession,
+  supabase,
+}) => {
   return (
     <MainFrame>
       <div className={styles.LoginScreen}>
@@ -116,7 +103,12 @@ const LoginScreen = ({ setCurrentScreen }) => {
               Create Account
             </span>
           </small>
-          <LoginForm setCurrentScreen={setCurrentScreen} />
+          <LoginForm
+            setCurrentScreen={setCurrentScreen}
+            setCurrentUser={setCurrentUser}
+            setSession={setSession}
+            supabase={supabase}
+          />
         </div>
       </div>
     </MainFrame>

@@ -1,6 +1,9 @@
-import supabase from "../auth";
+// import supabase from "../auth";
+
+import { createClient } from "../auth";
 
 export const createNewEmployer = async (userData, role, companyData) => {
+  const supabase = createClient();
   const { data, error } = await supabase
     .from("Companies")
     .insert({ ...companyData })

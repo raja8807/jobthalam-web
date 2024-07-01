@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./custom_button.module.scss";
+import Link from "next/link";
 
 const CustomButton = ({
   variant = 1,
@@ -10,6 +11,7 @@ const CustomButton = ({
   btnText,
   disabled,
   isLoading,
+  href,
 }) => {
   if (type === "submit") {
     return (
@@ -23,6 +25,20 @@ const CustomButton = ({
         onClick={onClick}
       />
     );
+  }
+
+  if (href) {
+   return <Link href={href}>
+      <button
+        className={`${styles.customButton} ${styles[`v${variant}`]} ${
+          wFull ? styles.wFull : ""
+        }`}
+        onClick={onClick}
+        disabled={disabled || isLoading}
+      >
+        {isLoading ? "Loading..." : children}
+      </button>
+    </Link>;
   }
 
   return (
