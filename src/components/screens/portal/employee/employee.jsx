@@ -7,14 +7,15 @@ import { Briefcase, Gear, Layers } from "react-bootstrap-icons";
 import EmployeeOverview from "./items/overview/overview";
 import FeaturedJobs from "./items/featured_jobs/featured_jobs";
 import Settings from "./items/settings/settings";
-import { createClient } from "@/utils/supabase/auth";
+import { createClient } from "../../../../../utils/supabase/client";
 
-const EmployeeScreen = ({ currentUser, setCurrentUser, supabase }) => {
+const EmployeeScreen = ({ currentUser, setCurrentUser }) => {
   const [currentMenuItemIndex, setCurrentMenuItemIndex] = useState(0);
 
   const [resumes, setResumes] = useState([]);
 
   const getResumes = async () => {
+    const supabase = createClient()
     const { data, error } = await supabase
       .from("Resumes")
       .select()

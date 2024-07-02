@@ -7,8 +7,9 @@ import styles from "./personal.module.scss";
 import CustomSelect from "@/components/ui/select/custom_select/custom_select";
 import CustomTextArea from "@/components/ui/custom_textarea/custom_textarea";
 import CustomButton from "@/components/ui/custom_button/custom_button";
+import { createClient } from "../../../../../../../../../utils/supabase/client";
 
-const PersonalTab = ({ currentUser, setCurrentUser, supabase }) => {
+const PersonalTab = ({ currentUser, setCurrentUser }) => {
   const [values, setValues] = useState({ ...currentUser });
 
   const [compValues, setCompValues] = useState({
@@ -24,6 +25,8 @@ const PersonalTab = ({ currentUser, setCurrentUser, supabase }) => {
   const updateCurrentUser = async () => {
     setIsLoading(true);
 
+    let supabase = createClient();
+
     const { data: comData, error: comError } = await supabase
       .from("Companies")
       .update({ ...compValues })
@@ -34,6 +37,8 @@ const PersonalTab = ({ currentUser, setCurrentUser, supabase }) => {
       console.log("company update error--->", comError);
     }
 
+    supabase = createClient()
+    
     if (comData?.[0]) {
       const empVals = { ...values };
       delete empVals.company;
@@ -175,14 +180,10 @@ const PersonalTab = ({ currentUser, setCurrentUser, supabase }) => {
             />
           </div>
         </div>
-      <br />
+        <br />
 
-        <CustomButton isLoading={isLoading}>
-        Save Changes
-      </CustomButton>
+        <CustomButton isLoading={isLoading}>Save Changes</CustomButton>
       </form>
-
-  
     </>
   );
 };

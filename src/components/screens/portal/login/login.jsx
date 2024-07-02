@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import styles from "./login.module.scss";
 import CustomInput from "@/components/ui/cuatom_input/cuatom_input";
 import CustomButton from "@/components/ui/custom_button/custom_button";
-import { createClient } from "@/utils/supabase/auth";
-// import { createClient } from "@supabase/supabase-js";
+import { createClient } from "../../../../../utils/supabase/client";
 
-const LoginForm = ({ setSession, supabase }) => {
+
+const LoginForm = ({ setSession }) => {
   const [values, setValues] = useState({
     email: "",
     password: "",
@@ -18,6 +18,8 @@ const LoginForm = ({ setSession, supabase }) => {
   const login = async () => {
     setError(null);
     setIsLoading(true);
+
+    const supabase = createClient()
 
     const { data: sessionData, error: sessionError } =
       await supabase.auth.signInWithPassword({

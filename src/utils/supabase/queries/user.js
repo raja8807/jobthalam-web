@@ -1,9 +1,9 @@
 // import supabase from "../auth";
-import { createClient } from "../auth";
+import { createClient } from "../../../../utils/supabase/client";
 import { updateUser } from "../libs";
 
-export const getCurrentUserById = async (id, role,supabase) => {
-  // const supabase = createClient()
+export const getCurrentUserById = async (id, role) => {
+  const supabase = createClient()
   // console.log();
   if (role) {
     if (role === "Candidates") {

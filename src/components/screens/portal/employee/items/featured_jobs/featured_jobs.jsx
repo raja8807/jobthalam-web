@@ -2,11 +2,14 @@ import JobTable from "@/components/jobs/job_table/job_table";
 import CustomButton from "@/components/ui/custom_button/custom_button";
 import MainFrame from "@/components/ui/main_frame/main_frame";
 import React, { useEffect, useState } from "react";
+import { createClient } from "../../../../../../../utils/supabase/client";
 
-const FeaturedJobs = ({ currentUser, supabase }) => {
+const FeaturedJobs = ({ currentUser }) => {
   const [featuredJobs, setFeaturedJobs] = useState([]);
 
   const fetchFeaturedJobs = async () => {
+    const supabase = createClient()
+
     const { data, error } = await supabase
       .from("Featured_Jobs")
       .select(

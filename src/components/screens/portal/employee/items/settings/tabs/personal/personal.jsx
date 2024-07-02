@@ -12,9 +12,9 @@ import Resumes from "./resume/resumes";
 import CustomButton from "@/components/ui/custom_button/custom_button";
 // import supabase from "@/utils/supabase/auth";
 import { EDUCATIONS, EXPERIENCES } from "@/constants/job";
-import { createClient } from "@/utils/supabase/auth";
+import { createClient } from "../../../../../../../../../utils/supabase/client";
 
-const PersonalTab = ({ currentUser, setCurrentUser, resumes, supabase }) => {
+const PersonalTab = ({ currentUser, setCurrentUser, resumes }) => {
   const [values, setValues] = useState({ ...currentUser });
   const updateValues = (field, value) => {
     setValues((prev) => ({ ...prev, [field]: value }));
@@ -24,6 +24,8 @@ const PersonalTab = ({ currentUser, setCurrentUser, resumes, supabase }) => {
 
   const updateCurrentUser = async () => {
     setIsLoading(true);
+    const supabase = createClient()
+
     const { data, error } = await supabase
       .from(currentUser.role)
       .update({ ...values })

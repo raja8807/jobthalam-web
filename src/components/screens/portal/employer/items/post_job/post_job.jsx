@@ -12,9 +12,10 @@ import {
   JOB_TYPES,
   LOCATIONS,
 } from "../../../../../../constants/job";
+import { createClient } from "../../../../../../../utils/supabase/client";
 
 
-const PostJobMenu = ({ currentUser,supabase }) => {
+const PostJobMenu = ({ currentUser }) => {
   const [values, setValues] = useState({
     title: "",
     role: "",
@@ -36,6 +37,8 @@ const PostJobMenu = ({ currentUser,supabase }) => {
 
   const createJob = async () => {
     setIsLoading(true);
+    const supabase = createClient()
+
     const { error, data } = await supabase
       .from("Jobs")
       .insert({ ...values })

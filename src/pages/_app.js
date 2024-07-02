@@ -9,8 +9,9 @@ import Router from "next/router";
 import styles from "../styles/Home.module.scss";
 import fonts from "@/styles/fonts";
 import Layout from "@/components/layout/layout";
-import { createClient } from "@/utils/supabase/auth";
+// import { createClient } from "@/utils/supabase/auth";
 import { getCurrentUserById } from "@/utils/supabase/queries/user";
+import { createClient } from "../../utils/supabase/client";
 
 // var x = new SupabaseAuthClient();
 
@@ -37,17 +38,20 @@ export default function App({ Component, pageProps }) {
 
   const [session, setSession] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
-  const supabase = createClient();
-  
 
   useEffect(() => {
+    const supabase = createClient();
+
     supabase.auth.onAuthStateChange(async (event, session) => {
+      console.log(session);
       if (event === "SIGNED_OUT") {
         setSession(null);
         setCurrentUser(null);
       } else {
         const role = session?.user?.user_metadata?.role;
         if (role) {
+          // supabase = createClient();
+
           const { data: userData, error: userError } = await supabase
             .from(role)
             .select(role === "Employers" ? `*,company:Companies(*)` : `*`)
@@ -64,20 +68,19 @@ export default function App({ Component, pageProps }) {
     });
   }, []);
 
-
+  console.log(session);
 
   return (
     // <SessionProvider session={pageProps.session}>
     <>
       <main className={`${styles.main} ${fonts.MainFont}`}>
-        <Layout currentUser={currentUser} supabase={supabase}>
+        <Layout currentUser={currentUser}>
           <Component
             {...pageProps}
             currentUser={currentUser}
             session={session}
             setCurrentUser={setCurrentUser}
             setSession={setSession}
-            supabase={supabase}
           />
         </Layout>
       </main>
